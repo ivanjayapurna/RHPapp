@@ -17,11 +17,11 @@ def run_simulation(N_MONs, MP, MRs, RRs, avgDP, conv, CTP):
         return monomerAmounts
 
     
-    def testAssertions(numPolymers, avgDP, conv, MRs):
+    def testAssertions(numPolymers, avgDP, MRs):
         "***Makes sure inputs are valid***"
         inputsValid = True
 
-        if MP < avgDP*conv/100:
+        if MP < avgDP/100:
             print("Error", "Monomer Pool Size is too small!")
             inputsValid = False
 
@@ -29,7 +29,7 @@ def run_simulation(N_MONs, MP, MRs, RRs, avgDP, conv, CTP):
             print("Error", "DP or Monomer Pool Size is too small!")
             inputsValid = False
 
-        elif int(avgDP*conv/ 100) <= 0:
+        elif int(avgDP/100) <= 0:
             print("Error", "DP or Conversion cannot be zero!")
             inputsValid = False
 
@@ -103,11 +103,11 @@ def run_simulation(N_MONs, MP, MRs, RRs, avgDP, conv, CTP):
     #Pool size is adjusted to account for rounding errors while calculating monmer amounts
     adjustedPoolSize = sum(monomerAmounts)
 
-    numPolymers = int(adjustedPoolSize / avgDP)
+    numPolymers = int(adjustedPoolSize / (avgDP/conv))
 
 
     "***Check if user inputs are valid***"
-    inputsValid = testAssertions(numPolymers, avgDP, conv, MRs)
+    inputsValid = testAssertions(numPolymers, avgDP, MRs)
     if not inputsValid:
         return
 
@@ -228,7 +228,7 @@ def run_simulation(N_MONs, MP, MRs, RRs, avgDP, conv, CTP):
     #Calculating how many monomers the reaction will use, taking into account initiated monomers
     monomersUsed = 1*numPolymers
 
-    monomers_to_consume = int((conv/100) * adjustedPoolSize) - monomersUsed
+    monomers_to_consume = int(conv * adjustedPoolSize) - monomersUsed
 
     "***Propogation for standard Mayo-Lewis Case***"
 
