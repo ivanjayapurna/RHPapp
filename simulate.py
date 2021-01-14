@@ -3,7 +3,7 @@ import math
 import csv
 import random
 
-def run_simulation(N_MONs, MP, MRs, RRs, avgDP, conv, CTP):
+def run_simulation(N_MONs, N_CHAINs, MRs, RRs, avgDP, conv, CTP, PRUNE_OLIGOMERS, FILE_NAME):
     
     
     def getMonomerAmounts(MRs, N_MONs, MP):
@@ -29,7 +29,7 @@ def run_simulation(N_MONs, MP, MRs, RRs, avgDP, conv, CTP):
             print("Error", "DP or Monomer Pool Size is too small!")
             inputsValid = False
 
-        elif int(avgDP/100) <= 0:
+        elif int(avgDP) <= 0:
             print("Error", "DP or Conversion cannot be zero!")
             inputsValid = False
 
@@ -79,9 +79,11 @@ def run_simulation(N_MONs, MP, MRs, RRs, avgDP, conv, CTP):
     def exportPolymerArray(polymerArray):
         csvData = []
         for polymer in polymerArray:
-            csvData.append(polymer.asArray())
+            polymer = polymer.asArray()
+            if len(polymer) > PRUNE_OLIGOMERS:
+                csvData.append(polymer)
          
-        file = "test.csv" # TODO: FIX THIS FILE NAMING FOR OUTPUTTING.
+        file = FILE_NAME + ".csv" # TODO: FIX THIS FILE NAMING FOR OUTPUTTING.
         if file:
             with open(file, 'w') as csvFile:
                 writer = csv.writer(csvFile)
@@ -90,15 +92,14 @@ def run_simulation(N_MONs, MP, MRs, RRs, avgDP, conv, CTP):
             print("Simulation done! Sequence file saved @", file)
     
     
-    "***Calculate number of polymer chains by dividing total number of monomers (pool size) by average DP***"
+    "***Calculate monomer pool size***"
+    MP = int( N_CHAINs * (avgDP/conv) )
+    
     #initiate a Polymer Array, which will hold all of the Polymer Objects to be simulated and created
     polymerArray = []
 
     #each monomer amount is calculated based off its ratio and the pool size
     monomerAmounts = getMonomerAmounts(MRs, N_MONs, MP)
-
-    #preserve a copy of the original amounts for use in Monomer Usage graph
-    originalMonomerAmounts = getMonomerAmounts(MRs, N_MONs, MP)
 
     #Pool size is adjusted to account for rounding errors while calculating monmer amounts
     adjustedPoolSize = sum(monomerAmounts)
@@ -251,7 +252,7 @@ def run_simulation(N_MONs, MP, MRs, RRs, avgDP, conv, CTP):
         num_monomers_to_add = 1
 
         #percentage that an extra monomer will be added
-        fudge_factor = 1 - CTP/100
+        fudge_factor = 1 - CTP
 
         #calculate how many monomers to add
         while True:
