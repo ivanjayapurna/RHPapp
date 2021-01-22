@@ -3,7 +3,7 @@ import math
 import csv
 import random
 
-def run_simulation(N_MONs, N_CHAINs, MRs, RRs, avgDP, conv, CTP, PRUNE_OLIGOMERS, FILE_NAME):
+def run_simulation(N_MONs, N_CHAINs, MRs, RRs, avgDP, conv, CTP, PRUNE_OLIGOMERS):
     
     
     def getMonomerAmounts(MRs, N_MONs, MP):
@@ -76,14 +76,14 @@ def run_simulation(N_MONs, N_CHAINs, MRs, RRs, avgDP, conv, CTP, PRUNE_OLIGOMERS
         assert False, "Shouldn't get here"
 
         
-    def exportPolymerArray(polymerArray):
+    def exportPolymerArray(polymerArray, N_MONs, N_CHAINs, MRs, RRs, avgDP, conv, CTP, PRUNE_OLIGOMERS):
         csvData = []
         for polymer in polymerArray:
             polymer = polymer.asArray()
             if len(polymer) > PRUNE_OLIGOMERS:
                 csvData.append(polymer)
          
-        file = FILE_NAME + ".csv" # TODO: FIX THIS FILE NAMING FOR OUTPUTTING.
+        file = 'outputs/' + 'NM' + str(N_MONs) + '_MR' + str(MRs) + '_NC' + str(N_CHAINs) + '_DP' + str(avgDP) + '_conv' + str(int(conv*100)) + '_CTP' + str(int(CTP*100)) + '_FILT' + str(PRUNE_OLIGOMERS) + ".csv"
         if file:
             with open(file, 'w') as csvFile:
                 writer = csv.writer(csvFile)
@@ -304,7 +304,7 @@ def run_simulation(N_MONs, N_CHAINs, MRs, RRs, avgDP, conv, CTP, PRUNE_OLIGOMERS
             "Increment counter for monomers used"
             i += 1
 
-    exportPolymerArray(polymerArray)
+    exportPolymerArray(polymerArray, N_MONs, N_CHAINs, MRs, RRs, avgDP, conv, CTP, PRUNE_OLIGOMERS)
 
     "***Update Global Variables***"
     #lambdaValue = analysis.calculate_theta(self) - do we care about the lambdavalue?
