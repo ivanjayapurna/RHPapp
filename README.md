@@ -7,6 +7,7 @@ Xu Group's Compositional Drift App but high throughput - for bulk simulation and
 - Added a feature to simulate "purification" i.e. removal of short chain oligomers (with a variable cut-off you can set). Note that this option will naturally shift avgDP of your simulated batch slightly higher than target i.e. DP = 100 --> 102.
 - Added a (very basic) loop so you can vary across a variable
 - Directly linked to sequence analysis workflow (i.e. merged with the now outdated rhp_seq_analysis notebook)
+- Can simulate RHPs with MR = 0 values now 
 
 Note: analysis.py isn't actually used, but contains many useful functions that may be useful in the future.
 
@@ -15,5 +16,7 @@ Note: analysis.py isn't actually used, but contains many useful functions that m
 2. Add options for BCPs
 3. Potentially link to monomer database - to auto-populate RR's and Mw's?
 4. PDI really varies with DP targetted, I really don't like the current implementation of CTP... idk what to do about it though.
+5. Improve figure aesthetics
+6. Convert notebook into a .py file 
 
 By Ivan Jayapurna
