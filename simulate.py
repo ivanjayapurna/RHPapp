@@ -33,9 +33,9 @@ def run_simulation(N_MONs, N_CHAINs, MRs, RRs, avgDP, conv, CTP, PRUNE_OLIGOMERS
             print("Error", "DP or Conversion cannot be zero!")
             inputsValid = False
 
-        elif min(MRs) == 0:
-            print("Error", "Monomer Ratios cannot be zero!")
-            inputsValid = False
+        #elif min(MRs) == 0:
+        #    print("Error", "Monomer Ratios cannot be zero!")
+        #    inputsValid = False
 
         return inputsValid
     
