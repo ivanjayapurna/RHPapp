@@ -1,9 +1,18 @@
-#import libraries
+#libraries
 import csv
 import pandas as pd
 import numpy as np
 import math
 from scipy.optimize import fsolve
+
+#exp_name (name it), [ mon1, mon2, mon3, mon4, ] (monomer names)
+# [ mon1_mr, mon2_mr, mon3_mr, mon4_mr, ] (monomer proportions out of 100)
+#int_std (name of int_std), int_std_mr (ratio of int_std), 
+#init (name of initiator), init_conc (concentration of initiator), 
+#raft (name of raft), macro_raft_mw (molecular proportion of raft), i_r_ratio (unknown, probably 1), 
+#solv (name of solvent), conversion (conv), target_mw, 
+#rxn_scale (prolly should be 1), rxn_vol (L), rxn_temp (C)
+
 
 def main(exp_name, mon1, mon2, mon3, mon4, mon1_mr, mon2_mr, mon3_mr, mon4_mr, int_std, int_std_mr, init, init_conc, raft, macro_raft_mw, i_r_ratio, solv, conversion, target_mw, rxn_scale, rxn_vol, rxn_temp):
 	###############
@@ -158,7 +167,6 @@ def main(exp_name, mon1, mon2, mon3, mon4, mon1_mr, mon2_mr, mon3_mr, mon4_mr, i
 		vols = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 		concs = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 		initial_values()
-
 		# run fsolve to calculate values properly via solving simultaneous, based on target_mw
 		curr_mw = (calc_total(weights,5)*conversion)/(mols[6]*1000) + MWs[6]
 		print('initial guess mw: ' + str(curr_mw)) # FOR TESTING, CAN DELETE LATER
@@ -191,9 +199,12 @@ def main(exp_name, mon1, mon2, mon3, mon4, mon1_mr, mon2_mr, mon3_mr, mon4_mr, i
 		
 		# temporary output of reaction time
 		# constants
+		#--TODO: RETURN
 		init_df = pd.read_csv('initiators.txt', delimiter='\t')
 		init_df.index = init_df['Code']
 		kd = np.exp(init_df.loc[init,'Freq Factor (ln A)'])*np.exp(-init_df.loc[init,'Ea (KJ/mol K)']*1000/(8.3144621*(rxn_temp+273)))
+		#--/TODO: RETURN
+		#kd = 10e4 #TEMP
 		kp = 10e3
 		ka = 10e6
 		kf = 10e4
@@ -218,7 +229,7 @@ def main(exp_name, mon1, mon2, mon3, mon4, mon1_mr, mon2_mr, mon3_mr, mon4_mr, i
 		print('time: ' + str(time))
 
 		# return output values to main webapp
-		return target_mw, curr_mw, df2.round(4), dp, time
+		return exp_name, target_mw, curr_mw, df2.round(4), dp, time
 
 
 if __name__ == '__main__':

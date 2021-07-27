@@ -3,6 +3,13 @@ import math
 import csv
 import random
 
+def rr_extracter(rr_df, monomers):
+    listy = [[rr_df[a][b] if a != b else 'same' for a in monomers] for b in monomers]
+    for i in listy:
+        while 'same' in i:
+            i.remove('same')
+    return listy
+
 def run_simulation(N_MONs, N_CHAINs, MRs, RRs, avgDP, conv, CTP, PRUNE_OLIGOMERS):
     
     

@@ -1,4 +1,4 @@
-"Polymer Object"
+'''Polymer Object'''
 
 class Polymer:
 
