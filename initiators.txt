@@ -1,2 +1,0 @@
-Name	Code	Freq Factor (ln A)	Ea (KJ/mol K)
-iso-Butyl Acrylate (IBA)	IBA	4	51
