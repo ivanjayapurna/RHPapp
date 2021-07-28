@@ -149,7 +149,7 @@ def main(exp_name, mon1, mon2, mon3, mon4, mon1_mr, mon2_mr, mon3_mr, mon4_mr, i
 	############
 
 	# open up reagent master list as a new pandas data frame
-	df = pd.read_csv('reagent_master_list.txt', delimiter='\t')
+	df = pd.read_csv('data/reagent_master_list.txt', delimiter='\t')
 	df.index = df['Code']
 	
 	# first check input monomer molecular ratios sum to 100. if not print error statement
@@ -199,12 +199,9 @@ def main(exp_name, mon1, mon2, mon3, mon4, mon1_mr, mon2_mr, mon3_mr, mon4_mr, i
 		
 		# temporary output of reaction time
 		# constants
-		#--TODO: RETURN
-		init_df = pd.read_csv('initiators.txt', delimiter='\t')
+		init_df = pd.read_csv('data/initiators.txt', delimiter='\t')
 		init_df.index = init_df['Code']
 		kd = np.exp(init_df.loc[init,'Freq Factor (ln A)'])*np.exp(-init_df.loc[init,'Ea (KJ/mol K)']*1000/(8.3144621*(rxn_temp+273)))
-		#--/TODO: RETURN
-		#kd = 10e4 #TEMP
 		kp = 10e3
 		ka = 10e6
 		kf = 10e4
@@ -230,7 +227,3 @@ def main(exp_name, mon1, mon2, mon3, mon4, mon1_mr, mon2_mr, mon3_mr, mon4_mr, i
 
 		# return output values to main webapp
 		return exp_name, target_mw, curr_mw, df2.round(4), dp, time
-
-
-if __name__ == '__main__':
-	main()

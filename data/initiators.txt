@@ -1,0 +1,2 @@
+Name	Code	Freq Factor (ln A)	Ea (KJ/mol K)
+Azobisisobutryonitrile (AIBN)	AIBN	4	51
