@@ -1,5 +1,7 @@
-# HTP_CompDrift
+# RHPapp
 Xu Group's Compositional Drift App but high throughput - for bulk simulation and generation of simulated polymer sequence datasets. Refactored changes include: simplifying and clean-up work (removed all plotting code, fancy UI, non-functional penultimate model implementation and reactivity ratio calculation implementation, as well as other non-essential auxillary features).
+
+This has been partially implemented as a web-app that can be found at: https://www.ocf.berkeley.edu/~xugroup/rhpapp
 
 ### Key changes to the actual algorithm include:
 - Instead of avgDP input representing avgDP if conversion were 100%, a more intuitive input where avgDP is just the avgDP you want (no matter what the conversion is) is used in this implementation.
