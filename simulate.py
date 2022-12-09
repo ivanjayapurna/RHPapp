@@ -3,12 +3,9 @@ import math
 import csv
 import random
 
-def rr_extracter(rr_df, monomers):
-    listy = [[rr_df[a][b] if a != b else 'same' for a in monomers] for b in monomers]
-    for i in listy:
-        while 'same' in i:
-            i.remove('same')
-    return listy
+# simulate.py
+# Authors: Ivan Jayapurna, Prajna Jalagam, Spencer Jenkins
+# This script uses a Monte-Carlo method to simulate polymerization.
 
 def run_simulation(N_MONs, N_CHAINs, MRs, RRs, avgDP, conv, CTP, PRUNE_OLIGOMERS):
     
@@ -156,7 +153,7 @@ def run_simulation(N_MONs, N_CHAINs, MRs, RRs, avgDP, conv, CTP, PRUNE_OLIGOMERS
             "Case for 2-monomer system: use the Mayo Lewis Equation"
             f1 = monomerAmounts[0]
             f2 = monomerAmounts[1]
-            r1 = RRs[0][1]
+            r1 = RRs[0][0]
             r2 = RRs[1][0]
             weight = (r1*f1**2 + f1*f2) / (r1*f1**2 + 2*f1*f2 + r2*f2**2)
             choices.append([1, weight])
